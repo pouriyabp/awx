@@ -20,9 +20,9 @@ import JobList from 'components/JobList';
 import RelatedTemplateList from 'components/RelatedTemplateList';
 import { ResourceAccessList } from 'components/ResourceAccessList';
 import RoutedTabs from 'components/RoutedTabs';
-import ConstructedInventoryDetail from './ConstructedInventoryDetail';
+import ConstructedInventoryDetail from './InventoryDetail';
 import ConstructedInventoryEdit from './ConstructedInventoryEdit';
-import ConstructedInventoryGroups from './ConstructedInventoryGroups';
+import ConstructedInventoryGroups from './InventoryGroups';
 import ConstructedInventoryHosts from './ConstructedInventoryHosts';
 import { getInventoryPath } from './shared/utils';
 
@@ -111,7 +111,11 @@ function ConstructedInventory({ setBreadcrumb }) {
   }
 
   let showCardHeader = true;
-  if (['edit'].some((name) => location.pathname.includes(name))) {
+  if (
+    ['edit', 'add', 'groups/', 'hosts/', 'sources/'].some((name) =>
+      location.pathname.includes(name)
+    )
+  ) {
     showCardHeader = false;
   }
 
@@ -158,9 +162,12 @@ function ConstructedInventory({ setBreadcrumb }) {
             </Route>,
             <Route
               path="/inventories/constructed_inventory/:id/groups"
-              key="groups"
+              key="constructed_inventory_groups"
             >
-              <ConstructedInventoryGroups />
+              <ConstructedInventoryGroups
+                inventory={inventory}
+                setBreadcrumb={setBreadcrumb}
+              />
             </Route>,
             <Route
               key="jobs"
